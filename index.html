@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>L’Artisan du Goût</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="img/logo-light-transparent.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+<body>
+    <header>    
+        <div class="container-header">
+      <div class="logo">
+        <img src="img/logo-light-transparent.png" alt="Logo Cafetería" />
+      </div>
+        <p><strong><em style="color: black;">Donde cada sabor es una historia</em></strong></p> 
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#vision">Nuestra Esencia</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#reservaciones">Reservaciones</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li class="cart-icon-container">
+                <a href="#" id="cart-icon" class="cart-icon">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span id="cart-count" class="cart-count">0</span>
+                </a>
+        </ul>
+        <!-- Pedido Carrito -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Tu Pedido</h2>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div id="cart-items" class="cart-items">
+                
+            </div>
+            <div class="cart-total">
+                Total: <span id="cart-total">$0</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">Finalizar Pedido</button>
+        </div>
+    </div>
+    
+   <!-- Formulario de Pedido -->
+<div id="order-form-modal" class="order-form-modal">
+    <div class="order-form-content">
+        <div class="cart-header">
+            <h2>Información del Cliente</h2>
+            <span class="close-order-form">&times;</span>
+        </div>
+        <form id="order-form" action="https://formspree.io/f/xnndrqvo" method="POST">
+            <!-- Campos ocultos esenciales para Formspree -->
+            <input type="hidden" name="_subject" value="Nuevo pedido - L'Artisan du Goût">
+            <input type="hidden" name="_language" value="es">
+            <input type="hidden" name="_replyto" id="form-email">
+            <input type="hidden" name="_cc" value="tucorreo@ejemplo.com"> <!-- Opcional: copia a tu email -->
+            <input type="hidden" name="pedido_detalle" id="pedido-detalle">
+            
+            <!-- Campos visibles del formulario -->
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" name="cedula" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" required 
+                       onchange="document.getElementById('form-email').value = this.value">
+            </div>
+            
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <button type="submit" class="submit-order-btn">
+                    Confirmar Pedido  
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- Notificación -->
+    <div id="notification" class="notification"></div>
+
+    </nav>
+     <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h2>Bienvenidos a L’Artisan du Goût</h2>
+            <p>Disfruta de los mejores cafés y delicias culinarias en un ambiente acogedor</p>
+        </div>
+     </section>
+      <section id="vision" class="vision-section">
+        <h2>Nuestra Misión y Visión</h2>
+            <div class="vision-container">
+            <p>Ofrecer a los clientes una experiencia de sabor única, artesanal y refinada, donde cada taza de café y cada producto refleje pasión, técnica y autenticidad
+                Convertirse en un referente del café de especialidad en la ciudad, reconocido por su enfoque artesanal, su ambiente elegante y su compromiso la comunidad, sostenibilidad y excelencia:</p>
+            
+            <div class="vision-values">
+                <div class="value-item">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Sostenibilidad</h3>
+                    <p>Utilizar granos de café de origen ético y prácticas ecológicas en todas nuestras operaciones.</p>
+                </div>
+                
+                 <div class="value-item">
+                    <i class="fas fa-heart"></i>
+                    <h3>Comunidad</h3>
+                    <p>Crear un espacio que fomente conexiones genuinas entre nuestros clientes y el personal.</p>
+                 </div>
+                
+                  <div class="value-item">
+                    <i class="fas fa-award"></i>
+                    <h3>Excelencia</h3>
+                    <p>Ofrecer productos de la más alta calidad con un servicio excepcional en cada detalle.</p>
+                  </div>
+            </div>
+        </div>
+    </section>
+      
+    
+    <section id="menu" class="container">
+        <h2>Nuestro Menú</h2>
+        
+        <div class="menu-categories">
+            <button class="category-btn active" data-category="bebidas">Bebidas</button>
+            <button class="category-btn" data-category="desayunos">Desayunos</button>
+            <button class="category-btn" data-category="comidas">Comidas</button>
+            <button class="category-btn" data-category="postres">Postres</button>
+        </div>
+        
+        <!-- Sección de Bebidas -->
+        <div id="bebidas" class="menu-section active">
+            <h3>Bebidas Calientes</h3>
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/cafe americano.jpg" alt="Café Americano">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Café Americano</h3>
+                        <p>Café negro preparado con granos arábica de alta calidad</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$12.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/capuccino.jpg" alt="Capuccino">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Capuccino</h3>
+                        <p>Espresso con leche vaporizada y una suave capa de espuma</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$16.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/cafelatte.jpg" alt="Latte">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Latte</h3>
+                        <p>Espresso con más leche que un capuccino y poco espuma</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$38.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Bebidas Frías</h3>
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/icetcofi.jpg" alt="Iced Coffee">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Iced Coffee</h3>
+                        <p>Café frío servido con hielo y leche al gusto</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$32.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/frappe.jpg" alt="Frappé">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Frappé</h3>
+                        <p>Mezcla helada de café, leche y hielo, coronado con crema batida</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$42.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Desayunos -->
+        <div id="desayunos" class="menu-section">
+            <h3>Desayunos</h3>
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/desayuno continental.jpg" alt="Desayuno Continental">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Desayuno Continental</h3>
+                        <p>Pan fresco, mermelada, mantequilla, jugo de naranja y café</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$85.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/Huevos benedictos.jpg" alt="Huevos Benedictinos">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Huevos Benedictinos</h3>
+                        <p>Huevos pochados sobre pan inglés con jamón y salsa holandesa</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$120.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/omellet.jpg" alt="Omelette del Chef">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Omelette del Chef</h3>
+                        <p>Omelette relleno de champiñones, espinaca y queso gouda</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$95.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Comidas -->
+        <div id="comidas" class="menu-section">
+            <h3>Comidas</h3>
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/cesar.jpg" alt="Ensalada César">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Ensalada César</h3>
+                        <p>Lechuga romana, croutones, queso parmesano y aderezo césar</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$30.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/sandinwch.jpg" alt="Sándwich Club">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Sándwich Club</h3>
+                        <p>Pollo, tocino, lechuga, tomate y mayonesa en pan tostado</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$110.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/pasta.jpg" alt="Pasta Alfredo">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Pasta Alfredo</h3>
+                        <p>Fettuccine con salsa cremosa de queso parmesano y perejil</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$130.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Postres -->
+        <div id="postres" class="menu-section">
+            <h3>Postres</h3>
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/postre frutos rojos.jpg" alt="Cheesecake">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Cheesecake</h3>
+                        <p>Porción de cheesecake clásico con topping de frutos rojos</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$65.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/Brownie.jpg" alt="Brownie con Helado">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Brownie con Helado</h3>
+                        <p>Brownie de chocolate caliente con helado de vainilla</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$75.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img">
+                    <img src="img/Tiramisu.jpg" alt="Tiramisú">
+                </div>
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3>Tiramisú</h3>
+                        <p>Postre italiano con capas de bizcocho empapado en café</p>
+                    </div>
+                    <div class="menu-item-footer">
+                        <span class="menu-item-price">$70.000</span>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="reservaciones" class="container">
+        <h2>Reserva tu Mesa</h2>
+        <div class="reservation-form">
+        <form id="reservationForm" action="https://formspree.io/f/xnndrqvo" method="POST">
+    <div class="form-group">
+        <input type="hidden" name="_subject" value="Nueva reserva - L'Artisan du Goût">
+        <input type="hidden" name="_language" value="es">
+        <input type="hidden" name="_replyto" value="">
+        <input type="hidden" name="_next" value="#reservaciones?success=true">
+        <label for="name">Nombre completo:</label>
+        <input type="text" id="name" name="nombre" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="phone">Teléfono:</label>
+        <input type="tel" id="phone" name="telefono" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="date">Fecha:</label>
+        <input type="date" id="date" name="fecha" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="time">Hora:</label>
+        <input type="time" id="time" name="hora" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="guests">Número de personas:</label>
+        <select id="guests" name="personas" required>
+            <option value="1">1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="5">5 personas</option>
+            <option value="6">6 personas</option>
+            <option value="7">7+ personas</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="notes">Notas adicionales:</label>
+        <textarea id="notes" name="notas" rows="3"></textarea>
+    </div>
+    
+    <button type="submit">Reservar Mesa</button>
+</form>
+
+        </div>
+    </section>
+    
+    <section id="contacto" class="container">
+    <h2>Contacto</h2>
+    <table class="contact-table">
+        <tr>
+            <th><i class="fas fa-map-marker-alt"></i> Dirección</th>
+            <td>Calle Principal 123, Ciudad</td>
+        </tr>
+        <tr>
+            <th><i class="fas fa-phone"></i> Teléfono</th>
+            <td>(123) 456-7890</td>
+        </tr>
+        <tr>
+            <th><i class="fas fa-clock"></i> Horario</th>
+            <td>
+                <strong>Lunes a Viernes:</strong> 7:00 - 20:00<br>
+                <strong>Sábado y Domingo:</strong> 8:00 - 22:00
+            </td>
+        </tr>
+        <tr>
+            <th><i class="fas fa-envelope"></i> Correo</th>
+            <td>info@artisandugout.com</td>
+        </tr>
+    </table>
+</section>
+    
+    <footer>
+        <p>&copy; 2025 Cafetería Aromas. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </footer>
+        <script src="js/Scripts.js"></script> 
+</body>
+</html>
